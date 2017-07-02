@@ -4,9 +4,10 @@ ENV VERSION 0.12.0
 ENV IS_SERVER true
 #frps.ini
 ENV BIND_PORT 7000
-ENV VHOST_HTTP_PORT 8080
 ENV SUBDOMAIN_HOST zwise.pw
 ENV MAX_POOL_COUNT 10
+ENV VHOST_HTTP_PORT 8080
+ENV VHOST_HTTPS_PORT 8443
 ENV DASHBOARD_PORT 7500
 ENV DASHBOARD_USER admin
 ENV DASHBOARD_PWD zwise
@@ -23,51 +24,52 @@ ENV WEB02_TYPE http
 ENV WEB02_LOCAL_PORT 80
 ENV WEB02_SUBDOMAIN www
 
-ADD https://github.com/fatedier/frp/releases/download/v${VERSION}/frp_${VERSION}_linux_amd64.tar.gz /root
+WORKDIR /root
+
+ADD https://github.com/fatedier/frp/releases/download/v${VERSION}/frp_${VERSION}_linux_amd64.tar.gz .
 
 RUN set -xe \
-    && tar zxf /root/frp_${VERSION}_linux_amd64.tar.gz /root
+    && tar zxf frp_${VERSION}_linux_amd64.tar.gz \
+    && rm frp_${VERSION}_linux_amd64.tar.gz
 
-RUN set -xe \
-    && touch /root/frps.ini \
-    && sed -i '$a [common]' \
-           -i '$a bind_port = ${BIND_PORT}' \
-           -i '$a vhost_http_port = ${VHOST_HTTP_PORT}' \
-           -i '$a subdomain_host =  ${SUBDOMAIN_HOST}' \
-           -i '$a max_pool_count = ${MAX_POOL_COUNT}' \
-           -i '$a dashboard_port = ${DASHBOARD_PORT}' \
-           -i '$a dashboard_user = ${DASHBOARD_USER}' \
-           -i '$a dashboard_pwd = ${DASHBOARD_PWD}' \
-           /root/frps.ini
+RUN { \
+       echo "[common]"; \
+       echo "bind_port = ${BIND_PORT}"; \
+       echo "subdomain_host =  ${SUBDOMAIN_HOST}"; \
+       echo "vhost_http_port = ${VHOST_HTTP_PORT}"; \
+       echo "vhost_https_port = ${VHOST_HTTPS_PORT}"; \
+       echo "max_pool_count = ${MAX_POOL_COUNT}"; \
+       echo "dashboard_port = ${DASHBOARD_PORT}"; \
+       echo "dashboard_user = ${DASHBOARD_USER}"; \
+       echo "dashboard_pwd = ${DASHBOARD_PWD}"; \
+    } > frps.ini
 
-RUN set -xe \
-    && touch /root/frpc.ini \
-    && sed -i '$a [common]' \
-           -i '$a server_addr = ${SERVER_ADDR}' \
-           -i '$a bind_port = ${BIND_PORT}' \
-           -i '$a pool_count = ${POOL_COUNT}' \
-           -i '$a [ssh]' \
-           -i '$a type = tcp' \
-           -i '$a local_ip = ${SSH_LOCAL_IP}' \
-           -i '$a local_port = ${SSH_LOCAL_PORT}' \
-           -i '$a remote_port = ${SSH_REMOTE_PORT}' \
-           -i '$a use_encryption = true' \
-           -i '$a use_compression = true' \
-           -i '$a [web01]' \
-           -i '$a type = ${WEB01_TYPE}' \
-           -i '$a local_port = ${WEB01_LOCAL_PORT}' \
-           -i '$a subdomain = ${WEB01_SUBDOMAIN}' \
-           -i '$a [web02]' \
-           -i '$a type = ${WEB02_TYPE}' \
-           -i '$a local_port = ${WEB02_LOCAL_PORT}' \
-           -i '$a subdomain = ${WEB02_SUBDOMAIN}' \
-           /root/frpc.ini
+RUN { \
+       echo "[common]"; \
+       echo "server_addr = ${SERVER_ADDR}"; \
+       echo "bind_port = ${BIND_PORT}"; \
+       echo "pool_count = ${POOL_COUNT}"; \
+       echo "[ssh]"; \
+       echo "type = tcp"; \
+       echo "local_ip = ${SSH_LOCAL_IP}"; \
+       echo "local_port = ${SSH_LOCAL_PORT}"; \
+       echo "remote_port = ${SSH_REMOTE_PORT}"; \
+       echo "use_encryption = true"; \
+       echo "use_compression = true"; \
+       echo "[web01]"; \
+       echo "type = ${WEB01_TYPE}"; \
+       echo "local_port = ${WEB01_LOCAL_PORT}"; \
+       echo "subdomain = ${WEB01_SUBDOMAIN}"; \
+       echo "[web02]"; \
+       echo "type = ${WEB02_TYPE}"; \
+       echo "local_port = ${WEB02_LOCAL_PORT}"; \
+       echo "subdomain = ${WEB02_SUBDOMAIN}"; \
+    } > frpc.ini
 
 
 ADD ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-WORKDIR /root
-EXPOSE 22
+EXPOSE 7000 7500 2222 8080 8443
 
 ENTRYPOINT ["/entrypoint.sh"]
