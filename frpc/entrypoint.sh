@@ -22,6 +22,7 @@ if [ ${SSH} == "true" ];then
   echo "use_encryption = ${USE_ENCRYPTION}"; \
   echo "use_compression = ${USE_COMPRESSION}"; \
 } >> frpc.ini
+fi
 
 if [ ${WEB01} == "true" ];then
 { \
@@ -33,6 +34,7 @@ if [ ${WEB01} == "true" ];then
   echo "use_compression = ${USE_COMPRESSION}"; \
   echo "subdomain = ${WEB01_SUBDOMAIN}"; \
 } >> frpc.ini
+fi
 
 if [ ${WEB02} == "true" ];then
 { \
@@ -44,6 +46,7 @@ if [ ${WEB02} == "true" ];then
   echo "use_compression = ${USE_COMPRESSION}"; \
   echo "subdomain = ${WEB02_SUBDOMAIN}"; \
 } >> frpc.ini
+fi
 
 if [ ${PROXY} == "true" ];then
 { \
@@ -54,6 +57,7 @@ if [ ${PROXY} == "true" ];then
   echo "plugin_http_user = ${PROXY_HTTP_USER}"; \
   echo "plugin_http_passwd = ${PROXY_HTTP_PASSWD}"; \
 } >> frpc.ini
+fi
 
 mv frp_${VERSION}_linux_amd64/frpc .
 rm -rf frp_${VERSION}_linux_amd64
