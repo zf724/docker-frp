@@ -14,7 +14,7 @@
 
 if [ ${SSH} == "true" ];then
 { \
-  echo "[ssh]"; \
+  echo "[${SSH_NAME}]"; \
   echo "type = tcp"; \
   echo "local_ip = ${SSH_LOCAL_IP}"; \
   echo "local_port = ${SSH_LOCAL_PORT}"; \
@@ -26,7 +26,7 @@ fi
 
 if [ ${WEB01} == "true" ];then
 { \
-  echo "[web01]"; \
+  echo "[${WEB01_NAME}]"; \
   echo "type = ${WEB01_TYPE}"; \
   echo "local_ip = ${WEB01_LOCAL_IP}"; \
   echo "local_port = ${WEB01_LOCAL_PORT}"; \
@@ -38,7 +38,7 @@ fi
 
 if [ ${WEB02} == "true" ];then
 { \
-  echo "[web02]"; \
+  echo "[${WEB02_NAME}]"; \
   echo "type = ${WEB02_TYPE}"; \
   echo "local_ip = ${WEB02_LOCAL_IP}"; \
   echo "local_port = ${WEB02_LOCAL_PORT}"; \
@@ -50,7 +50,7 @@ fi
 
 if [ ${PROXY} == "true" ];then
 { \
-  echo "[plugin_http_proxy]"; \
+  echo "[${PROXY_NAME}]"; \
   echo "type = tcp"; \
   echo "remote_port = ${PROXY_REMOTE_PORT}"; \
   echo "plugin = http_proxy"; \
