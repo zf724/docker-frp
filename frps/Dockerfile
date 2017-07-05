@@ -18,7 +18,7 @@ ENV SUBDOMAIN_HOST zwise.pw
 
 WORKDIR /root
 
-COPY https://github.com/fatedier/frp/releases/download/v${VERSION}/frp_${VERSION}_linux_amd64.tar.gz .
+ADD https://github.com/fatedier/frp/releases/download/v${VERSION}/frp_${VERSION}_linux_amd64.tar.gz .
 
 RUN set -xe \
     && tar zxf frp_${VERSION}_linux_amd64.tar.gz \
