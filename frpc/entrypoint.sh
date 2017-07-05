@@ -12,9 +12,9 @@
   echo "tcp_mux = true"; \
 } > frpc.ini
 
-if [ ${SSH} == "true" ];then
+if [ ${SSH} != "none" ] && [ ${SSH} != "NONE" ];then
 { \
-  echo "[${SSH_NAME}]"; \
+  echo "[${SSH}]"; \
   echo "type = tcp"; \
   echo "local_ip = ${SSH_LOCAL_IP}"; \
   echo "local_port = ${SSH_LOCAL_PORT}"; \
@@ -24,9 +24,9 @@ if [ ${SSH} == "true" ];then
 } >> frpc.ini
 fi
 
-if [ ${WEB01} == "true" ];then
+if [ ${WEB01} != "none" ] && [ ${WEB01} != "NONE" ];then
 { \
-  echo "[${WEB01_NAME}]"; \
+  echo "[${WEB01}]"; \
   echo "type = ${WEB01_TYPE}"; \
   echo "local_ip = ${WEB01_LOCAL_IP}"; \
   echo "local_port = ${WEB01_LOCAL_PORT}"; \
@@ -36,9 +36,9 @@ if [ ${WEB01} == "true" ];then
 } >> frpc.ini
 fi
 
-if [ ${WEB02} == "true" ];then
+if [ ${WEB02} != "none" ] && [ ${WEB02} != "NONE" ];then
 { \
-  echo "[${WEB02_NAME}]"; \
+  echo "[${WEB02}]"; \
   echo "type = ${WEB02_TYPE}"; \
   echo "local_ip = ${WEB02_LOCAL_IP}"; \
   echo "local_port = ${WEB02_LOCAL_PORT}"; \
@@ -48,9 +48,9 @@ if [ ${WEB02} == "true" ];then
 } >> frpc.ini
 fi
 
-if [ ${PROXY} == "true" ];then
+if [ ${PROXY} != "none" ] && [ ${PROXY} != "NONE" ];then
 { \
-  echo "[${PROXY_NAME}]"; \
+  echo "[${PROXY}]"; \
   echo "type = tcp"; \
   echo "remote_port = ${PROXY_REMOTE_PORT}"; \
   echo "plugin = http_proxy"; \
