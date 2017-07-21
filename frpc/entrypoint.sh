@@ -53,7 +53,7 @@ if [ ${PROXY} != "none" ] && [ ${PROXY} != "NONE" ];then
   echo "[${PROXY}]"; \
   echo "type = tcp"; \
   echo "remote_port = ${PROXY_REMOTE_PORT}"; \
-  echo "plugin = http_proxy"; \
+  echo "plugin = ${PROXY_PLUGIN}"; \
   echo "plugin_http_user = ${PROXY_HTTP_USER}"; \
   echo "plugin_http_passwd = ${PROXY_HTTP_PASSWD}"; \
 } >> frpc.ini
