@@ -41,7 +41,9 @@ ADD https://github.com/fatedier/frp/releases/download/v${VERSION}/frp_${VERSION}
 
 RUN set -xe \
     && tar zxf frp_${VERSION}_linux_amd64.tar.gz \
-    && rm frp_${VERSION}_linux_amd64.tar.gz
+    && rm frp_${VERSION}_linux_amd64.tar.gz \
+    && mv frp_${VERSION}_linux_amd64/frpc . \
+    && rm -rf frp_${VERSION}_linux_amd64
 
 ADD ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

@@ -59,7 +59,4 @@ if [ ${PROXY} != "none" ] && [ ${PROXY} != "NONE" ];then
 } >> frpc.ini
 fi
 
-mv frp_${VERSION}_linux_amd64/frpc .
-rm -rf frp_${VERSION}_linux_amd64
-
 ./frpc -c frpc.ini

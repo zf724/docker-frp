@@ -19,7 +19,4 @@
   echo "tcp_mux = true"; \
 } > frps.ini
 
-mv frp_${VERSION}_linux_amd64/frps .
-rm -rf frp_${VERSION}_linux_amd64
-
 ./frps -c frps.ini
