@@ -15,7 +15,7 @@
 if [ ${SSH} != "none" ] && [ ${SSH} != "NONE" ];then
 { \
   echo "[${SSH}]"; \
-  echo "type = tcp"; \
+  echo "type = ${SSH_TYPE}"; \
   echo "local_ip = ${SSH_LOCAL_IP}"; \
   echo "local_port = ${SSH_LOCAL_PORT}"; \
   echo "remote_port = ${SSH_REMOTE_PORT}"; \
